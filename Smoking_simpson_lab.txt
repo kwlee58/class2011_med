@@ -1,0 +1,94 @@
+> setwd("~/Documents/Daum 클라우드/R.WD/")
+> s<-read.table("Smoking_simpson.txt")
+> s
+      V1 V2  V3  V4
+1  18-44  o  no  19
+2  18-44  o yes 269
+3  18-44  x  no  13
+4  18-44  x yes 327
+5  45-64  o  no  78
+6  45-64  o yes 167
+7  45-64  x  no  52
+8  45-64  x yes 147
+9  65-    o  no  42
+10 65-    o yes   7
+11 65-    x  no 165
+12 65-    x yes  28
+> str(s)
+'data.frame':	12 obs. of  4 variables:
+ $ V1: Factor w/ 3 levels "18-44","45-64",..: 1 1 1 1 2 2 2 2 3 3 ...
+ $ V2: Factor w/ 2 levels "o","x": 1 1 2 2 1 1 2 2 1 1 ...
+ $ V3: Factor w/ 2 levels "no","yes": 1 2 1 2 1 2 1 2 1 2 ...
+ $ V4: int  19 269 13 327 78 167 52 147 42 7 ...
+> names(s)<-c("Age","Smoking","Survived","Cases")
+> xtabs(Cases~Survived+Smoking+Age,data=s)
+, , Age = 18-44
+
+        Smoking
+Survived   o   x
+     no   19  13
+     yes 269 327
+
+, , Age = 45-64
+
+        Smoking
+Survived   o   x
+     no   78  52
+     yes 167 147
+
+, , Age = 65-  
+
+        Smoking
+Survived   o   x
+     no   42 165
+     yes   7  28
+
+> xtabs(Cases~Survived+Smoking,data=s)
+        Smoking
+Survived   o   x
+     no  139 230
+     yes 443 502
+> options("digits"=2)
+> prop.table(xtabs(Cases~Survived+Smoking,data=s),margin=2)
+        Smoking
+Survived    o    x
+     no  0.24 0.31
+     yes 0.76 0.69
+> prop.table(xtabs(Cases~Survived+Smoking+Age,data=s),margin=c(2,3))
+, , Age = 18-44
+
+        Smoking
+Survived     o     x
+     no  0.066 0.038
+     yes 0.934 0.962
+
+, , Age = 45-64
+
+        Smoking
+Survived     o     x
+     no  0.318 0.261
+     yes 0.682 0.739
+
+, , Age = 65-  
+
+        Smoking
+Survived     o     x
+     no  0.857 0.855
+     yes 0.143 0.145
+> prop.table(xtabs(Cases~Survived+Smoking+Age,data=s),margin=c(2,3))[1,,]
+       Age
+Smoking 18-44 45-64 65-  
+      o 0.066  0.32  0.86
+      x 0.038  0.26  0.85
+> ftable(prop.table(xtabs(Cases~Survived+Smoking+Age,data=s),margin=c(2,3)))
+                 Age 18-44 45-64 65-  
+Survived Smoking                      
+no       o           0.066 0.318 0.857
+         x           0.038 0.261 0.855
+yes      o           0.934 0.682 0.143
+         x           0.962 0.739 0.145
+> ftable(prop.table(xtabs(Cases~Survived+Smoking+Age,data=s),margin=c(2,3)))[1:2,]
+      [,1] [,2] [,3]
+[1,] 0.066 0.32 0.86
+[2,] 0.038 0.26 0.85
+> 

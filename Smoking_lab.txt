@@ -1,0 +1,252 @@
+
+R version 2.13.2 beta (2011-09-19 r57030)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+R은 free 소프트웨어이고, [완전하게 무보증]입니다.
+일정한 조건에 따르면, 자유롭게 이것을 재배포할수가 있습니다.
+배포 조건의 상세한것에 대해서는 'license()' 또는 'licence()' 라고 입력해주십시오
+
+R는 많은 공헌자에의한 공동 프로젝트입니다
+더 자세한것에 대해서는 'contributors()'라고 입력해 주십시오.
+또는, R나 R의 패키지를 출판물로 인용할때의 형식에 대해서는 
+'citation()'라고  입력해주십시오
+'demo()'라고 입력하면, demos를 볼수가 있습니다.
+'help()'라고 한다면, on-line help가 나옵니다.
+'help.start()'로 HTML 브라우저에 의한 help가 보여집니다
+'q()'라고 입력하면 R를 종료합니다
+[R.app GUI 1.42 (5904) x86_64-apple-darwin9.8.0]
+
+[History restored from /Users/kwlee/.Rapp.history]
+
+> setwd("~/Documents/Daum 클라우드/R.WD/")
+> a<-scan()
+1: 33
+2: 6
+3: 12
+4: 11
+5: 6
+6: 16
+7: 
+Read 6 items
+> b<-matrix(a,nrow=2,byrow=TRUE)
+> b
+     [,1] [,2] [,3]
+[1,]   33    6   12
+[2,]   11    6   16
+> a
+[1] 33  6 12 11  6 16
+> ?matrix
+starting httpd help server ... done
+> c<-matrix(a,nrow=2)
+> c
+     [,1] [,2] [,3]
+[1,]   33   12    6
+[2,]    6   11   16
+> attributes(b)
+$dim
+[1] 2 3
+
+> class(b)
+[1] "matrix"
+> dimnames(b)[[2]]<-c("alike","somewhat","different")
+> b
+     alike somewhat different
+[1,]    33        6        12
+[2,]    11        6        16
+> row.names(b)<-c("identical","fraternal")
+> b
+          alike somewhat different
+identical    33        6        12
+fraternal    11        6        16
+> attributes(b)
+$dim
+[1] 2 3
+
+$dimnames
+$dimnames[[1]]
+[1] "identical" "fraternal"
+
+$dimnames[[2]]
+[1] "alike"     "somewhat"  "different"
+
+
+> options("digits"=3)
+> prop.table(b,margin=1)
+          alike somewhat different
+identical 0.647    0.118     0.235
+fraternal 0.333    0.182     0.485
+> chisq.test(b)
+
+	Pearson's Chi-squared test
+
+data:  b 
+X-squared = 8.09, df = 2, p-value = 0.01755
+
+Warning message:
+In chisq.test(b) : 카이 자승 근사는 부정확할지도 모릅니다
+> chisq.test(b)$expected
+          alike somewhat different
+identical  26.7     7.29        17
+fraternal  17.3     4.71        11
+Warning message:
+In chisq.test(b) : 카이 자승 근사는 부정확할지도 모릅니다
+> library("coin")
+요구된 패키지 survival를 로드중입니다
+요구된 패키지 splines를 로드중입니다
+요구된 패키지 mvtnorm를 로드중입니다
+요구된 패키지 modeltools를 로드중입니다
+요구된 패키지 stats4를 로드중입니다
+> fisher.test(b)
+
+	Fisher's Exact Test for Count Data
+
+data:  b 
+p-value = 0.01594
+alternative hypothesis: two.sided 
+
+> ?fisher.test
+> d<-matrix(scan(),nrow=2,byrow=TRUE)
+1: 44 9 9 9
+5: 
+Read 4 items
+> d
+     [,1] [,2]
+[1,]   44    9
+[2,]    9    9
+> dimnames(d)<-list(c("identical","fraternal"),c("alike","different"))
+> d
+          alike different
+identical    44         9
+fraternal     9         9
+> prop.table(d,margin=1)
+          alike different
+identical  0.83      0.17
+fraternal  0.50      0.50
+> chisq.test(d)
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  d 
+X-squared = 6.09, df = 1, p-value = 0.01356
+
+Warning message:
+In chisq.test(d) : 카이 자승 근사는 부정확할지도 모릅니다
+> chisq.test(d)$expected
+          alike different
+identical    40      13.4
+fraternal    13       4.6
+Warning message:
+In chisq.test(d) : 카이 자승 근사는 부정확할지도 모릅니다
+> fisher.test(d)
+
+	Fisher's Exact Test for Count Data
+
+data:  d 
+p-value = 0.01043
+alternative hypothesis: true odds ratio is not equal to 1 
+95 percent confidence interval:
+  1.29 18.35 
+sample estimates:
+odds ratio 
+      4.76 
+
+> e<-matrix(scan(),nrow=2,byrow=TRUE)
+1: 23 4 21 5
+5: 
+Read 4 items
+> e
+     [,1] [,2]
+[1,]   23    4
+[2,]   21    5
+> dimnames(e)<-list(c("together","separated"),c("alike","different"))
+> e
+          alike different
+together     23         4
+separated    21         5
+> prop.table(e,margin=1)
+          alike different
+together  0.852     0.148
+separated 0.808     0.192
+> chisq.test(e)
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  e 
+X-squared = 0.0039, df = 1, p-value = 0.9505
+
+Warning message:
+In chisq.test(e) : 카이 자승 근사는 부정확할지도 모릅니다
+> chisq.test(e)$expected
+          alike different
+together   22.4      4.58
+separated  21.6      4.42
+Warning message:
+In chisq.test(e) : 카이 자승 근사는 부정확할지도 모릅니다
+> fisher.test(e)
+
+	Fisher's Exact Test for Count Data
+
+data:  e 
+p-value = 0.7277
+alternative hypothesis: true odds ratio is not equal to 1 
+95 percent confidence interval:
+ 0.254 7.835 
+sample estimates:
+odds ratio 
+      1.36 
+
+
+> f<-matrix(scan(),nrow=2,byrow=TRUE)
+1: 24 208 196 164 45
+6: 38 242 201 118 23
+11:
+Read 10 items
+> f
+     [,1] [,2] [,3] [,4] [,5]
+[1,]   24  208  196  164   45
+[2,]   38  242  201  118   23
+> row.names(f)<-c("lung.cancer","control")
+> dimnames(f)[[2]]<-c("1-4","5-14","15-24","25-49","50- ")
+> f
+            1-4 5-14 15-24 25-49 50- 
+lung.cancer  24  208   196   164   45
+control      38  242   201   118   23
+> prop.table(f,margin=1)
+               1-4  5-14 15-24 25-49   50- 
+lung.cancer 0.0377 0.327 0.308 0.257 0.0706
+control     0.0611 0.389 0.323 0.190 0.0370
+> chisq.test(f)
+
+	Pearson's Chi-squared test
+
+data:  f 
+X-squared = 20.2, df = 4, p-value = 0.0004481
+
+> g<-matrix(scan(),nrow=2,byrow=TRUE)
+1: 7 141 133 96 21
+6: 17 162 157 74 16
+11: 
+Read 10 items
+> g
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    7  141  133   96   21
+[2,]   17  162  157   74   16
+> dimnames(g)<-dimnames(f)
+> g
+            1-4 5-14 15-24 25-49 50- 
+lung.cancer   7  141   133    96   21
+control      17  162   157    74   16
+> prop.table(g,margin=1)
+               1-4  5-14 15-24 25-49   50- 
+lung.cancer 0.0176 0.354 0.334 0.241 0.0528
+control     0.0399 0.380 0.369 0.174 0.0376
+> g/f
+              1-4  5-14 15-24 25-49  50- 
+lung.cancer 0.292 0.678 0.679 0.585 0.467
+control     0.447 0.669 0.781 0.627 0.696
+> ls()
+[1] "a" "b" "c" "d" "e" "f" "g"
+> save(file="Smoking_lab.rda",list=ls())
+> 

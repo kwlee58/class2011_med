@@ -1,0 +1,565 @@
+> ?UCBAdmissions
+> str(UCBAdmissions)
+ table [1:2, 1:2, 1:6] 512 313 89 19 353 207 17 8 120 205 ...
+ - attr(*, "dimnames")=List of 3
+  ..$ Admit : chr [1:2] "Admitted" "Rejected"
+  ..$ Gender: chr [1:2] "Male" "Female"
+  ..$ Dept  : chr [1:6] "A" "B" "C" "D" ...
+> UCBAdmissions
+, , Dept = A
+
+          Gender
+Admit      Male Female
+  Admitted  512     89
+  Rejected  313     19
+
+, , Dept = B
+
+          Gender
+Admit      Male Female
+  Admitted  353     17
+  Rejected  207      8
+
+, , Dept = C
+
+          Gender
+Admit      Male Female
+  Admitted  120    202
+  Rejected  205    391
+
+, , Dept = D
+
+          Gender
+Admit      Male Female
+  Admitted  138    131
+  Rejected  279    244
+
+, , Dept = E
+
+          Gender
+Admit      Male Female
+  Admitted   53     94
+  Rejected  138    299
+
+, , Dept = F
+
+          Gender
+Admit      Male Female
+  Admitted   22     24
+  Rejected  351    317
+
+> ftable(UCBAdmissions)
+                Dept   A   B   C   D   E   F
+Admit    Gender                             
+Admitted Male        512 353 120 138  53  22
+         Female       89  17 202 131  94  24
+Rejected Male        313 207 205 279 138 351
+         Female       19   8 391 244 299 317
+         
+> ftable(UCBAdmissions, row.vars=2:1)
+                Dept   A   B   C   D   E   F
+Gender Admit                                
+Male   Admitted      512 353 120 138  53  22
+       Rejected      313 207 205 279 138 351
+Female Admitted       89  17 202 131  94  24
+       Rejected       19   8 391 244 299 317
+       
+> class(UCBAdmissions)
+[1] "table"
+
+> attributes(UCBAdmissions)
+$dim
+[1] 2 2 6
+
+$dimnames
+$dimnames$Admit
+[1] "Admitted" "Rejected"
+
+$dimnames$Gender
+[1] "Male"   "Female"
+
+$dimnames$Dept
+[1] "A" "B" "C" "D" "E" "F"
+
+
+$class
+[1] "table"
+
+> attributes(ftable(UCBAdmissions))
+$dim
+[1] 4 6
+
+$class
+[1] "ftable"
+
+$row.vars
+$row.vars$Admit
+[1] "Admitted" "Rejected"
+
+$row.vars$Gender
+[1] "Male"   "Female"
+
+
+$col.vars
+$col.vars$Dept
+[1] "A" "B" "C" "D" "E" "F"
+
+> UCBAdmissions[1,1,]
+  A   B   C   D   E   F 
+512 353 120 138  53  22 
+
+> UCBAdmissions[1,,]
+        Dept
+Gender     A   B   C   D  E  F
+  Male   512 353 120 138 53 22
+  Female  89  17 202 131 94 24
+  
+> UCBAdmissions[,1,]
+          Dept
+Admit        A   B   C   D   E   F
+  Admitted 512 353 120 138  53  22
+  Rejected 313 207 205 279 138 351
+
+> UCBAdmissions[,2,]
+          Dept
+Admit       A  B   C   D   E   F
+  Admitted 89 17 202 131  94  24
+  Rejected 19  8 391 244 299 317
+
+> apply(UCBAdmissions, c(1,2), sum)
+          Gender
+Admit      Male Female
+  Admitted 1198    557
+  Rejected 1493   1278
+
+> apply(UCBAdmissions, 1, sum)
+Admitted Rejected 
+    1755     2771 
+
+> apply(UCBAdmissions, 2, sum)
+  Male Female 
+  2691   1835 
+
+> apply(UCBAdmissions, 3, sum)
+  A   B   C   D   E   F 
+933 585 918 792 584 714 
+
+> apply(UCBAdmissions, c(2,3), sum)
+        Dept
+Gender     A   B   C   D   E   F
+  Male   825 560 325 417 191 373
+  Female 108  25 593 375 393 341
+  
+> apply(UCBAdmissions, c(1,3), sum)
+          Dept
+Admit        A   B   C   D   E   F
+  Admitted 601 370 322 269 147  46
+  Rejected 332 215 596 523 437 668
+  
+> prop.table(UCBAdmissions, margin=3)
+, , Dept = A
+
+          Gender
+Admit            Male     Female
+  Admitted 0.54876742 0.09539121
+  Rejected 0.33547696 0.02036442
+
+, , Dept = B
+
+          Gender
+Admit            Male     Female
+  Admitted 0.60341880 0.02905983
+  Rejected 0.35384615 0.01367521
+
+, , Dept = C
+
+          Gender
+Admit            Male     Female
+  Admitted 0.13071895 0.22004357
+  Rejected 0.22331155 0.42592593
+
+, , Dept = D
+
+          Gender
+Admit            Male     Female
+  Admitted 0.17424242 0.16540404
+  Rejected 0.35227273 0.30808081
+
+, , Dept = E
+
+          Gender
+Admit            Male     Female
+  Admitted 0.09075342 0.16095890
+  Rejected 0.23630137 0.51198630
+
+, , Dept = F
+
+          Gender
+Admit            Male     Female
+  Admitted 0.03081232 0.03361345
+  Rejected 0.49159664 0.44397759
+
+> prop.table(UCBAdmissions, margin=c(2,3))
+, , Dept = A
+
+          Gender
+Admit            Male     Female
+  Admitted 0.62060606 0.82407407
+  Rejected 0.37939394 0.17592593
+
+, , Dept = B
+
+          Gender
+Admit            Male     Female
+  Admitted 0.63035714 0.68000000
+  Rejected 0.36964286 0.32000000
+
+, , Dept = C
+
+          Gender
+Admit            Male     Female
+  Admitted 0.36923077 0.34064081
+  Rejected 0.63076923 0.65935919
+
+, , Dept = D
+
+          Gender
+Admit            Male     Female
+  Admitted 0.33093525 0.34933333
+  Rejected 0.66906475 0.65066667
+
+, , Dept = E
+
+          Gender
+Admit            Male     Female
+  Admitted 0.27748691 0.23918575
+  Rejected 0.72251309 0.76081425
+
+, , Dept = F
+
+          Gender
+Admit            Male     Female
+  Admitted 0.05898123 0.07038123
+  Rejected 0.94101877 0.92961877
+
+> ftable(prop.table(UCBAdmissions, margin=2:3))
+                Dept          A          B          C          D          E          F
+Admit    Gender                                                                       
+Admitted Male        0.62060606 0.63035714 0.36923077 0.33093525 0.27748691 0.05898123
+         Female      0.82407407 0.68000000 0.34064081 0.34933333 0.23918575 0.07038123
+Rejected Male        0.37939394 0.36964286 0.63076923 0.66906475 0.72251309 0.94101877
+         Female      0.17592593 0.32000000 0.65935919 0.65066667 0.76081425 0.92961877
+
+> ftable(prop.table(UCBAdmissions, margin=2:3),row.vars=2:1)
+                Dept          A          B          C          D          E          F
+Gender Admit                                                                          
+Male   Admitted      0.62060606 0.63035714 0.36923077 0.33093525 0.27748691 0.05898123
+       Rejected      0.37939394 0.36964286 0.63076923 0.66906475 0.72251309 0.94101877
+Female Admitted      0.82407407 0.68000000 0.34064081 0.34933333 0.23918575 0.07038123
+       Rejected      0.17592593 0.32000000 0.65935919 0.65066667 0.76081425 0.92961877
+> 
+
+> options("digits")
+$digits
+[1] 7
+
+> options()$digits
+[1] 7
+
+> print(prop.table(UCBAdmissions, margin=c(2,3)), digits=3)
+, , Dept = A
+
+          Gender
+Admit        Male Female
+  Admitted 0.6206 0.8241
+  Rejected 0.3794 0.1759
+
+, , Dept = B
+
+          Gender
+Admit        Male Female
+  Admitted 0.6304 0.6800
+  Rejected 0.3696 0.3200
+
+, , Dept = C
+
+          Gender
+Admit        Male Female
+  Admitted 0.3692 0.3406
+  Rejected 0.6308 0.6594
+
+, , Dept = D
+
+          Gender
+Admit        Male Female
+  Admitted 0.3309 0.3493
+  Rejected 0.6691 0.6507
+
+, , Dept = E
+
+          Gender
+Admit        Male Female
+  Admitted 0.2775 0.2392
+  Rejected 0.7225 0.7608
+
+, , Dept = F
+
+          Gender
+Admit        Male Female
+  Admitted 0.0590 0.0704
+  Rejected 0.9410 0.9296
+
+> options("digits"=3)
+
+> prop.table(UCBAdmissions, margin=2:3)[1,,]
+        Dept
+Gender       A    B     C     D     E      F
+  Male   0.621 0.63 0.369 0.331 0.277 0.0590
+  Female 0.824 0.68 0.341 0.349 0.239 0.0704
+
+> apply(UCBAdmissions, c(1,2),sum)
+          Gender
+Admit      Male Female
+  Admitted 1198    557
+  Rejected 1493   1278
+
+> prop.table(apply(UCBAdmissions, c(1,2), sum), margin=2)
+          Gender
+Admit       Male Female
+  Admitted 0.445  0.304
+  Rejected 0.555  0.696
+
+> prop.table(apply(UCBAdmissions, c(1,2), sum), margin=2)[1,]
+  Male Female 
+ 0.445  0.304 
+
+> apply(UCBAdmissions,3,sum)
+  A   B   C   D   E   F 
+933 585 918 792 584 714 
+
+> prop.table(UCBAdmissions, margin=2:3)[1,,]
+        Dept
+Gender       A    B     C     D     E      F
+  Male   0.621 0.63 0.369 0.331 0.277 0.0590
+  Female 0.824 0.68 0.341 0.349 0.239 0.0704
+
+> total.applicants.major<-apply(UCBAdmissions, 3, sum)
+
+> total.applicants<-sum(total.applicants.major)
+
+> total.applicants
+[1] 4526
+
+> total.applicants.major
+  A   B   C   D   E   F 
+933 585 918 792 584 714 
+
+> admitted.rates.m.major<-prop.table(UCBAdmissions,margin=2:3)[1,1,]
+
+> admitted.rates.f.major<-prop.table(UCBAdmissions,margin=2:3)[1,2,]
+
+> admitted.rates.m.major
+    A     B     C     D     E     F 
+0.621 0.630 0.369 0.331 0.277 0.059 
+
+> admitted.rates.f.major
+     A      B      C      D      E      F 
+0.8241 0.6800 0.3406 0.3493 0.2392 0.0704 
+
+> admitted.rates.m<-sum(admitted.rates.m.major*total.applicants.major)/total.applicants
+
+> admitted.rates.f<-sum(admitted.rates.f.major*total.applicants.major)/total.applicants
+
+> admitted.rates.m.major*total.applicants.major
+       A        B        C        D        E        F 
+579.0255 368.7589 338.9538 262.1007 162.0524  42.1126 
+> admitted.rates.f.major*total.applicants.major
+
+       A        B        C        D        E        F 
+768.8611 397.8000 312.7083 276.6720 139.6845  50.2522 
+
+> admitted.rates.m
+[1] 0.387
+
+> admitted.rates.f
+[1] 0.43
+
+> quartz(width=7,height=7, dpi=72)
+
+> mosaicplot(apply(UCBAdmissions, c(1, 2), sum),
++           main = "Student admissions at UC Berkeley")
+
+> opar <- par(mfrow = c(2, 3), oma = c(0, 0, 2, 0))
+
+> for(i in 1:6)
++   mosaicplot(UCBAdmissions[,,i],
++     xlab = "Admit", ylab = "Sex",
++     main = paste("Department", LETTERS[i]))
+> mtext(expression(bold("Student admissions at UC Berkeley")),
++       outer = TRUE, cex = 1.5)
+
+> par(opar)
+> 
+
+> search()
+ [1] ".GlobalEnv"        "tools:RGUI"        "package:stats"     "package:graphics"  "package:grDevices"
+ [6] "package:utils"     "package:datasets"  "package:methods"   "Autoloads"         "package:base"     
+> library("HSAUR2")
+요구된 패키지 lattice를 로드중입니다
+요구된 패키지 MASS를 로드중입니다
+요구된 패키지 scatterplot3d를 로드중입니다
+> library("coin")
+요구된 패키지 survival를 로드중입니다
+요구된 패키지 splines를 로드중입니다
+요구된 패키지 mvtnorm를 로드중입니다
+요구된 패키지 modeltools를 로드중입니다
+요구된 패키지 stats4를 로드중입니다
+> data(Lanza)
+> setwd("~/Documents/Daum 클라우드/R.WD")
+> load("Lanza.rda")
+> ls()
+[1] "Lanza"        "Lanza.1"      "Lanza.2"      "Lanza.3"      "Lanza.4"      "Lanza.all"    "Lanza.ci.all"
+[8] "Lanza.xtab"  
+> Lanza.xtab
+, , study = I
+
+             classification
+treatment      1  2  3  4  5
+  Misoprostol 21  2  4  2  0
+  Placebo      2  2  4  9 13
+
+, , study = II
+
+             classification
+treatment      1  2  3  4  5
+  Misoprostol 20  4  6  0  0
+  Placebo      8  4  9  4  5
+
+, , study = III
+
+             classification
+treatment      1  2  3  4  5
+  Misoprostol 20  4  3  1  2
+  Placebo      0  2  5  5 17
+
+, , study = IV
+
+             classification
+treatment      1  2  3  4  5
+  Misoprostol  1  4  5  0  0
+  Placebo      0  0  0  4  6
+
+> apply(Lanza.xtab,c(1,2),sum)
+             classification
+treatment      1  2  3  4  5
+  Misoprostol 62 14 18  3  2
+  Placebo     10  8 18 22 41
+
+> attributes(Lanza.xtab)
+$dim
+[1] 2 5 4
+
+$dimnames
+$dimnames$treatment
+[1] "Misoprostol" "Placebo"    
+
+$dimnames$classification
+[1] "1" "2" "3" "4" "5"
+
+$dimnames$study
+[1] "I"   "II"  "III" "IV" 
+
+
+$class
+[1] "xtabs" "table"
+
+$call
+xtabs(formula = ~treatment + classification + study, data = Lanza)
+
+> ftable(Lanza.xtab,row.vars=c(3,1),col.vars=2)
+                  classification  1  2  3  4  5
+study treatment                                
+I     Misoprostol                21  2  4  2  0
+      Placebo                     2  2  4  9 13
+II    Misoprostol                20  4  6  0  0
+      Placebo                     8  4  9  4  5
+III   Misoprostol                20  4  3  1  2
+      Placebo                     0  2  5  5 17
+IV    Misoprostol                 1  4  5  0  0
+      Placebo                     0  0  0  4  6
+  
+> xtabs(~treatment+classification, data=Lanza)
+             classification
+treatment      1  2  3  4  5
+  Misoprostol 62 14 18  3  2
+  Placebo     10  8 18 22 41
+
+> str(Lanza)
+'data.frame':	198 obs. of  3 variables:
+ $ study         : Factor w/ 4 levels "I","II","III",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ treatment     : Factor w/ 2 levels "Misoprostol",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ classification: Ord.factor w/ 5 levels "1"<"2"<"3"<"4"<..: 1 1 1 1 1 1 1 1 1 1 ...
+
+> str(Lanza.xtab)
+ xtabs [1:2, 1:5, 1:4] 21 2 2 2 4 4 2 9 0 13 ...
+ - attr(*, "dimnames")=List of 3
+  ..$ treatment     : chr [1:2] "Misoprostol" "Placebo"
+  ..$ classification: chr [1:5] "1" "2" "3" "4" ...
+  ..$ study         : chr [1:4] "I" "II" "III" "IV"
+ - attr(*, "class")= chr [1:2] "xtabs" "table"
+ - attr(*, "call")= language xtabs(formula = ~treatment + classification + study, data = Lanza)
+
+> apply(Lanza.xtab,1:2,sum)
+             classification
+treatment      1  2  3  4  5
+  Misoprostol 62 14 18  3  2
+  Placebo     10  8 18 22 41
+
+> options("digits"=3)
+> prop.table(Lanza.xtab, margin=c(1,3))
+, , study = I
+
+             classification
+treatment          1      2      3      4      5
+  Misoprostol 0.7241 0.0690 0.1379 0.0690 0.0000
+  Placebo     0.0667 0.0667 0.1333 0.3000 0.4333
+
+, , study = II
+
+             classification
+treatment          1      2      3      4      5
+  Misoprostol 0.6667 0.1333 0.2000 0.0000 0.0000
+  Placebo     0.2667 0.1333 0.3000 0.1333 0.1667
+
+, , study = III
+
+             classification
+treatment          1      2      3      4      5
+  Misoprostol 0.6667 0.1333 0.1000 0.0333 0.0667
+  Placebo     0.0000 0.0690 0.1724 0.1724 0.5862
+
+, , study = IV
+
+             classification
+treatment          1      2      3      4      5
+  Misoprostol 0.1000 0.4000 0.5000 0.0000 0.0000
+  Placebo     0.0000 0.0000 0.0000 0.4000 0.6000
+
+> ftable(prop.table(Lanza.xtab, margin=c(1,3)),row.vars=c(3,1),col.vars=2)
+                  classification      1      2      3      4      5
+study treatment                                                    
+I     Misoprostol                0.7241 0.0690 0.1379 0.0690 0.0000
+      Placebo                    0.0667 0.0667 0.1333 0.3000 0.4333
+II    Misoprostol                0.6667 0.1333 0.2000 0.0000 0.0000
+      Placebo                    0.2667 0.1333 0.3000 0.1333 0.1667
+III   Misoprostol                0.6667 0.1333 0.1000 0.0333 0.0667
+      Placebo                    0.0000 0.0690 0.1724 0.1724 0.5862
+IV    Misoprostol                0.1000 0.4000 0.5000 0.0000 0.0000
+      Placebo                    0.0000 0.0000 0.0000 0.4000 0.6000
+> 
+
+> prop.table(apply(Lanza.xtab, 1:2,sum),margin=1)
+             classification
+treatment         1      2     3      4      5
+  Misoprostol 0.626 0.1414 0.182 0.0303 0.0202
+  Placebo     0.101 0.0808 0.182 0.2222 0.4141
